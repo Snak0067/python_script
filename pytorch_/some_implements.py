@@ -42,6 +42,11 @@ def tensors_test():
 
 
 def pytorch_aotugrad():
+    """
+    1、每次做向前传播时都要建立一个新的图
+    2、pytorch中自己定义张量的向前和反向来构建新的autograd函数
+    :return:
+    """
     dtype = torch.cuda.FloatTensor
     N, D_in, H, D_out = 64, 1000, 100, 10
     x = Variable(torch.randn(N, D_in), requires_grad=False)
@@ -59,9 +64,39 @@ def pytorch_aotugrad():
         w2.data -= learning_rate * w2.grad.data
 
 
+def pytorch_nn():
+    N, D_in, H, D_out = 64, 1000, 100, 10
+    x = Variable(torch.randn(N, D_in))
+    y = Variable(torch.randn(N, D_out), requires_grad=False)
+
+    # Define our model as a sequence of layers
+    model = torch.nn.Sequential(
+        torch.nn.Linear(D_in, H),
+        torch.nn.ReLU(),
+        torch.nn.Linear(H, D_out))
+
+    # nn also defines common loss functions
+    # loss_fn = torch.nn.MSELoss(size_average=False)
+    criterion = torch.nn.MSELoss(size_average=False)
+    # Use an optimizer for different update rules
+    learning_rate = 1e-4
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+    for t in range(500):
+        y_pred = model(x)
+        loss = criterion(y_pred, y)
+        print(loss)
+
+        optimizer.zero_grad()
+        loss.backward()
+        # for param in model.parameters():
+        #     param.data -= learning_rate * param.grad.data
+        # Use an optimizer 来更新模型中的所有参数
+        optimizer.step()
+
+
 def torch_test():
     print(torch.cuda.is_available())
-
     num_gpu = 1
     # Decide which device we want to run on
     device = torch.device("cuda:0" if (torch.cuda.is_available() and num_gpu > 0) else "cpu")
@@ -71,4 +106,4 @@ def torch_test():
 
 
 if __name__ == '__main__':
-    tensors_test()
+    pytorch_nn()
