@@ -15,5 +15,20 @@ def randn_uniform():
         print(random_number, 10 ** random_number)
 
 
+def logspace():
+    # 对数等比数列
+    # np.logspace(start=开始值，stop=结束值，num=元素个数，base=指定对数的底, endpoint=是否包含结束值)
+    weight_scales = np.logspace(-4, 0, num=20)
+    print(weight_scales)
+
+
+def np_amax():
+    np.random.seed(15)
+    a = np.random.randint(1, 10, [2, 3, 3])
+    print(a)
+    b = np.amax(a, axis=(-1))
+    print(b)
+
+
 if __name__ == '__main__':
-    randn_uniform()
+    np_amax()
