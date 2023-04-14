@@ -115,6 +115,38 @@ def three_layer_convnet(x, params):
     return scores
 
 
+def torch_nn_Maxpool():
+    input = torch.randn(20, 3, 32, 32)
+    a = nn.Conv2d(in_channels=3, out_channels=96, kernel_size=5, padding=2, bias=True)
+    b = nn.ReLU()
+    c = nn.MaxPool2d(kernel_size=5, padding=2)
+    d = nn.Conv2d(in_channels=96, out_channels=48, kernel_size=3, padding=1, bias=True)
+    e = nn.MaxPool2d(kernel_size=3, padding=1)
+    a_out = a(input)
+    b_out = b(a_out)
+    c_out = c(b_out)
+    d_out = d(c_out)
+    e_out = e(d_out)
+    print(input.shape)
+    print(a_out.shape)
+    print(b_out.shape)
+    print(c_out.shape)
+    print(d_out.shape)
+    print(e_out.shape)
+
+
+def conv(input, kernel_size, padding, stride):
+    return (input - kernel_size + 2 * padding) // stride + 1
+
+
 if __name__ == '__main__':
-    # test_flatten()
-    two_layer_fc_test()
+    a = conv(32, 5, 2, 1)
+    b = conv(a, 3, 1, 1)
+    c = conv(b, 3, 1, 2)
+    d = conv(c, 3, 1, 1)
+    e = conv(d, 2, 1, 2)
+    f = conv(e, 3, 1, 1)
+    g = conv(f, 2, 1, 1)
+    h = conv(g, 2, 1, 2)
+
+    print(h)
