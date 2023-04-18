@@ -30,5 +30,19 @@ def np_amax():
     print(b)
 
 
+def np_add_at_1():
+    a = np.array([1, 2, 3, 4])
+    b = np.array([1, 2])
+    np.add.at(a, [0, 1], b)
+    print(a)
+
+
+def np_add_at_2():
+    x = [[0, 4, 1], [3, 2, 4]]
+    dW = np.zeros((5, 6))
+    np.add.at(dW, x, 1)
+    print(dW)
+
+
 if __name__ == '__main__':
-    np_amax()
+    np_add_at_2()
