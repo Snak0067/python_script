@@ -96,8 +96,6 @@ def random_crop_extract_frames(video_path, output_dir, crop_size=(224, 224), num
 
     print("视频帧提取和裁剪完成！")
 
-def center_crop_video_frames(video_path, output_dir, crop_size=(224, 224), num_frames=16):
-
 
 # 调用示例
 video_path = ["signer20_sample114_color.mp4", "signer4_sample323_color.mp4", "signer7_sample1625_color.mp4"]
