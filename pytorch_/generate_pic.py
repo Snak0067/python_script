@@ -136,5 +136,44 @@ def loss_pic_conv(initial_loss, final_loss):
     return loss_lines
 
 
+def make_acc_between_datasets():
+    # 准确率数据
+    glosses = ['WLASL300', 'WLASL100', 'AustlSubSet']
+    Conv3D = [33.24, 33.24, 70.63]
+    I3D = [56.14, 65.89, 83.29]
+    RD = [57.36, 67.24, 84.57]
+
+    # 创建x轴位置
+    x = np.arange(len(glosses))
+
+    # 设置直方图宽度
+    width = 0.2
+
+    # 绘制准确率直方图
+    plt.bar(x - width, Conv3D, width, label='Conv3D Network')
+    plt.bar(x, I3D, width, label='I3D Network')
+    plt.bar(x + width, RD, width, label='ResNet(2+1)D Network')
+
+    # 绘制均值直线
+    mean_values = [17.3, 20.4, 45]
+    # 绘制均值折线
+    plt.plot(glosses, mean_values, linestyle='--', color='black', label='average number of video samples per gloss')
+    # 在折线上添加数值标签
+    for i, mean_value in enumerate(mean_values):
+        plt.text(i, mean_value + 2, f'{mean_value}', ha='center', va='bottom')
+
+    # 设置x轴标签和标题
+    plt.xlabel('Dataset')
+    plt.ylabel('Top-1 Accuracy in datasets')
+    plt.xticks(x, glosses)
+    plt.title('The impact of sample size differences on model performance')
+
+    # 显示图例
+    plt.legend()
+
+    # 展示图表
+    plt.show()
+
+
 if __name__ == '__main__':
-    acc_pic()
+    make_acc_between_datasets()
